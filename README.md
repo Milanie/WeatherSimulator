@@ -1,6 +1,6 @@
 # WeatherSimulator
 
-Weather Simulator for generating weather conditions data for various stations and time across the world
+Weather Simulator for generating weather conditions data for various stations and time across the world. The weather data is predicted for any date for the given locations based on the historical data.
 
 # Running the app
 
