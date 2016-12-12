@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.lang3.EnumUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import com.cba.weather.common.WeatherUtils;
 import com.cba.weather.common.constants.WeatherSimulatorConstants;
@@ -33,13 +32,13 @@ public class WeatherCalculatorServiceImpl implements WeatherCalculatorService {
 
 	/*
 	 * Get history data for the station for the given date and the all the days
-	 * in the same week for all the prevoius years
+	 * in the same week for all the previous years
 	 * 
 	 * @param: Station name and Date
 	 * 
 	 * @return: history data summary in array list for each weather parameter .
 	 * Weather Parameters are mentioned in WeatherParameter enum *
-	 * [TEMPERATURE{21,21,15,16,19,22,19},PRESSURE{998,999,1000,1001,1006,1001}
+	 * Sample data: [TEMPERATURE{21,21,15,16,19,22,19},PRESSURE{998,999,1000,1001,1006,1001}
 	 */
 
 	@Override
@@ -107,7 +106,7 @@ public class WeatherCalculatorServiceImpl implements WeatherCalculatorService {
 				.findFirst();
 		if (stations.isPresent()) {
 			Stations currentStation = stations.get();
-			locationWeather.setLocationName(StringUtils.capitalize(station));
+			locationWeather.setLocationName(station);
 			locationWeather.setElevation(currentStation.getElevation());
 			locationWeather.setLatitude(currentStation.getLatitude());
 			locationWeather.setLongitude(currentStation.getLongitude());

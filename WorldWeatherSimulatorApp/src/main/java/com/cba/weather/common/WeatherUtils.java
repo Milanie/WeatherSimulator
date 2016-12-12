@@ -34,17 +34,32 @@ import com.opencsv.CSVReader;
 public class WeatherUtils {
 	private static String[] csvReaderLine;
 
+	
+	/**
+	 * Method to covert fahrenheit to celcius
+	 * @param temp in fahrenheit
+	 * @return temp in celcius
+	 */
 	public static int fahrenheitToCelcius(int temp) {
 		temp = ((temp - 32) * 5) / 9;
 		return temp;
 	}
 
+	/**
+	 * @param date
+	 * @param format
+	 * @return Formated string date
+	 */
 	public static String dateToString(Date date, String format) {
 
 		DateFormat df = new SimpleDateFormat(format);
 		return df.format(date);
 	}
 
+	/**Method to construct the historical file URL
+	 * @param station
+	 * @return Historical Data file URL
+	 */
 	public static String constructHistoricalFileURL(String station) {
 		File file = null;
 		
@@ -56,7 +71,7 @@ public class WeatherUtils {
 					.getResource(
 							WeatherSimulatorConstants.HISTORY_DATA_PATH + "/"
 									+ station + WeatherSimulatorConstants.EXTENSION);
-			
+			// for file in generated jar 
 			 if (res.toString().startsWith("jar:")) {
 			        try {
 			            InputStream input = WeatherUtils.class
@@ -79,7 +94,7 @@ public class WeatherUtils {
 			            ex.printStackTrace();
 			        }
 			    } else {
-			        //this will probably work in your IDE, but not from a JAR
+			       // for file in java class path
 			        file = new File(res.getFile());
 			        
 			    }
@@ -95,6 +110,11 @@ public class WeatherUtils {
 return file.getPath().replace("%20", " "); //fileURL;
 	}
 
+	/**
+	 * @param csvFile
+	 * @param findKey date
+	 * @return data summary for the  weeks belonging to the date in history data
+	 */
 	@SuppressWarnings("resource")
 	public static Map<WeatherParameter, ArrayList<String>> retreiveCSVData(
 			String csvFile, String findKey) {
@@ -106,7 +126,7 @@ return file.getPath().replace("%20", " "); //fileURL;
 			reader.readNext();
 			while ((csvReaderLine = reader.readNext()) != null) {
 				String rowDate = csvReaderLine[0];
-				if (WeatherUtils.isDateInNextWeekOf(
+				if (WeatherUtils.isDateInWeekOf(
 						WeatherUtils.stripYear(rowDate), findKey, true)) {
 					columnSummary
 							.forEach((parameter, colArray) -> {
@@ -122,6 +142,9 @@ return file.getPath().replace("%20", " "); //fileURL;
 		return columnSummary;
 	}
 
+	/**
+	 * @return empty map
+	 */
 	public static Map<WeatherParameter, ArrayList<String>> constructWeatherSummaryMap() {
 
 		Map<WeatherParameter, ArrayList<String>> columnSummary = new HashMap<WeatherParameter, ArrayList<String>>();
@@ -131,6 +154,10 @@ return file.getPath().replace("%20", " "); //fileURL;
 		return columnSummary;
 	}
 
+	/**Method to calculate mean 
+	 * @param values
+	 * @return mean value
+	 */
 	public static double calculateMeanValue(List<String> values) {
 
 		double sum = 0;
@@ -141,6 +168,10 @@ return file.getPath().replace("%20", " "); //fileURL;
 		return sum / values.size();
 	}
 
+	/**
+	 * @param values
+	 * @return returns element with maximum occurence
+	 */
 	public static String getMaxFrequencyElement(List<String> values) {
 		Map<String, Long> map = values.stream().collect(
 				Collectors.groupingBy(w -> w, Collectors.counting()));
@@ -152,22 +183,40 @@ return file.getPath().replace("%20", " "); //fileURL;
 
 	}
 
+	/**
+	 * @param value
+	 * @return negative value
+	 */
 	public static boolean isNegativeValue(String value) {
 		return value.startsWith("-");
 	}
 
+	/**
+	 * @param value
+	 * @return boolean for: is high humid(value)
+	 */
 	public static boolean isHighHumidity(String value) {
 		return (Double.parseDouble(value) > 60);
 	}
-
+	/**
+	 * @param value
+	 * @return boolean for: is high pressure(value)
+	 */
 	public static boolean isHighPressure(String value) {
 		return (Double.parseDouble(value) >= 998);
 	}
-
+	/**
+	 * @param value
+	 * @return boolean for: is low humid(value)
+	 */
 	public static boolean isLowPressure(String value) {
 		return (Double.parseDouble(value) < 998);
 	}
 
+	/**
+	 * @param date
+	 * @return add a week to date
+	 */
 	public static LocalDate addWeekToDate(String date) {
 		LocalDate today = stringToLocaleDate(date);
 
@@ -177,6 +226,10 @@ return file.getPath().replace("%20", " "); //fileURL;
 		return nextWeek;
 	}
 
+	/**
+	 * @param date
+	 * @return previous week date
+	 */
 	public static LocalDate prevWeekToDate(String date) {
 		LocalDate today = stringToLocaleDate(date);
 
@@ -185,6 +238,10 @@ return file.getPath().replace("%20", " "); //fileURL;
 		return nextWeek;
 	}
 
+	/**
+	 * @param  String date
+	 * @return Locale date
+	 */
 	public static LocalDate stringToLocaleDate(String date) {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
@@ -194,6 +251,12 @@ return file.getPath().replace("%20", " "); //fileURL;
 		return localDate;
 	}
 
+	/**
+	 * @param checkDate
+	 * @param startDate
+	 * @param endDate
+	 * @return boolean to check if date is in between start date and end date
+	 */
 	public static boolean isDateBetweenTheDates(LocalDate checkDate,
 			LocalDate startDate, LocalDate endDate) {
 
@@ -201,12 +264,18 @@ return file.getPath().replace("%20", " "); //fileURL;
 				&& (checkDate.isBefore(endDate) || (checkDate.isEqual(endDate)));
 	}
 
+	/**
+	 * @param checkDate
+	 * @param fortNightDate
+	 * @param isyearStripped
+	 * @return boolean to check if date is in 2weeks of fornightDate
+	 */
 	public static boolean isDateInFortNightOf(String checkDate,
 			String fortNightDate, boolean isyearStripped) {
 
 		if (isyearStripped) {
-			checkDate = checkDate + "2015";
-			fortNightDate = fortNightDate + "2015";
+			checkDate = checkDate + "2015";// pass dummy year
+			fortNightDate = fortNightDate + "2015"; // pass dummy year
 		}
 
 		LocalDate startDate = prevWeekToDate(fortNightDate);
@@ -215,12 +284,18 @@ return file.getPath().replace("%20", " "); //fileURL;
 				endDate);
 	}
 
-	public static boolean isDateInNextWeekOf(String checkDate, String weekDate,
+	/**
+	 * @param checkDate
+	 * @param weekDate
+	 * @param isyearStripped
+	 * @return boolen to check if date in the week of weekDate
+	 */
+	public static boolean isDateInWeekOf(String checkDate, String weekDate,
 			boolean isyearStripped) {
 
 		if (isyearStripped) {
-			checkDate = checkDate + "2015";
-			weekDate = weekDate + "2015";
+			checkDate = checkDate + "2015"; // pass dummy year
+			weekDate = weekDate + "2015"; // pass dummy year
 		}
 
 		LocalDate startDate = stringToLocaleDate(weekDate);
@@ -229,6 +304,10 @@ return file.getPath().replace("%20", " "); //fileURL;
 				endDate);
 	}
 
+	/**
+	 * @param date
+	 * @return String after stripping year from date
+	 */
 	public static String stripYear(String date) {
 		int index = date.lastIndexOf("/");
 		String strippedDate = date.substring(0, index + 1);
@@ -237,6 +316,11 @@ return file.getPath().replace("%20", " "); //fileURL;
 
 	}
 
+	/**
+	 * @param date
+	 * @param timeZone
+	 * @return ISO8601String
+	 */
 	public static String getISO8601StringForDate(Date date, String timeZone) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -250,7 +334,7 @@ return file.getPath().replace("%20", " "); //fileURL;
 			DateTimeFormatter format = DateTimeFormatter
 					.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 			
-			currentDate = format.format(zonedTime); //format.format(zonedTime);
+			currentDate = format.format(zonedTime);
 		}
 		
 		return currentDate; 

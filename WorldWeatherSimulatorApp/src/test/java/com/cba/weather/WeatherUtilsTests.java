@@ -72,12 +72,12 @@ public class WeatherUtilsTests {
 	
 	@Test
 	public void isDateInNextWeekOfTest(){
-		Assert.assertTrue(WeatherUtils.isDateInNextWeekOf("12/8/", "12/4/", true));
+		Assert.assertTrue(WeatherUtils.isDateInWeekOf("12/8/", "12/4/", true));
 	}
 	
 	@Test
 	public void isDateNotInNextWeekOfTest(){
-		Assert.assertTrue(WeatherUtils.isDateInNextWeekOf("12/8/", "12/4/", true));
+		Assert.assertTrue(WeatherUtils.isDateInWeekOf("12/8/", "12/4/", true));
 	}
 	
 	@Test

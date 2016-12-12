@@ -16,7 +16,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -60,14 +59,14 @@ public class WeatherApp extends Application {
 	public Button changeDateButton;
 	public Button submitButton;
 
-	public Hyperlink globeLink;
+	
 	public List<LocationWeather> locationDetails;
 	public ObservableList<LocationView> locsModel = FXCollections
 			.observableArrayList(new ArrayList<LocationView>());
 
 	public HBox tableActionBox;
 	public TableView<LocationView> topCities;
-	public Hyperlink topography;
+	
 
 	public TextArea weatherData;
 	WeatherController weatherController = new WeatherController();
@@ -82,14 +81,20 @@ public class WeatherApp extends Application {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 * Method to launch the App screen
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 
 		localDataHeader = constructLocalDataHeader();
 		
-		/***Calling controller to retrieve all stations weather details*/		
+		/***Calling controller to retrieve all stations weather details using WeatherCalculator Service*/		
 		
 		locationDetails = weatherController.retreiveAllStationsWeatherDetails(null);
+		
+		/****************************************************************/	
 
 		topCities = constructTable(loadLocationsModel(locationDetails));
 
@@ -285,7 +290,7 @@ public class WeatherApp extends Application {
 		weatherData.setWrapText(true);
 		weatherData.setPrefWidth(200);
 		weatherData.setPrefHeight(300);
-		getWeatherTextData() ;
+		setWeatherTextData() ;
 		return weatherData;
 	}
 
@@ -318,7 +323,7 @@ public class WeatherApp extends Application {
 		});
 		topCities.getColumns().get(1).setVisible(false);
 		weatherData.setVisible(true);
-		getWeatherTextData();
+		setWeatherTextData();
 		generateDataButton.setVisible(true);
 		generateDataButton.setText("Hide Text Data");
 		submitButton.setVisible(false);
@@ -347,14 +352,14 @@ public class WeatherApp extends Application {
 			generateDataButton.setText("Generate Text Data");
 		} else {
 
-			getWeatherTextData();
+			setWeatherTextData();
 		}
 	}
 
 	/**
 	 * Generate weather text data
 	 */
-	private void getWeatherTextData() {
+	private void setWeatherTextData() {
 		locationData ="";
 		locationDetails.forEach(data -> {
 

@@ -40,7 +40,7 @@ public class WeatherController {
 			List<LocationView> locationViews) {
 
 		List<LocationWeather> locationsWeather = new ArrayList<LocationWeather>();
-		// check if input is default ; which is the report for current date
+		// check if input is default 
 		if (isDefaultInput(locationViews)) {
 			System.out.println("processing request...");
 			// retrieves station list from Stations Enum
@@ -49,9 +49,9 @@ public class WeatherController {
 					.stream()
 					.forEach(
 							station -> {
+								// retrieves station weather details for default date, which is the current date
 								locationsWeather.add(weatherCalculatorService
-										.getWeatherDetails(StringUtils.capitalize((StringUtils.lowerCase(
-												(station.name())))),
+										.getWeatherDetails(station.getDisplayName(),
 												new Date()));
 
 							});
