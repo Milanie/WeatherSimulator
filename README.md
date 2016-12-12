@@ -38,9 +38,9 @@ In order to build the application following steps needs to be done.
 
  https://maven.apache.org/guides/mini/guide-configuring-maven.html
  
- 8. Download the project from the repository to your local directory
+8.  Download the project from the repository to your local directory
  
- 9. Go to the project home directory and run command mvn package to generate the project jar
+9.  Go to the project home directory and run command mvn package to generate the project jar
  
 
 
