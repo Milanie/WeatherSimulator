@@ -30,8 +30,7 @@ In order to build the application following steps needs to be done.
 
 4. Download  Apache Maven from  https://maven.apache.org/download.cgi
 
-5. Install maven path giving the path until bin folder in path variable
-
+5. Install maven path giving the path until bin folder in path variable. Please refer https://maven.apache.org/install.html
 
 6. Check maven installation by running command mvn -v in command prompt.
 
