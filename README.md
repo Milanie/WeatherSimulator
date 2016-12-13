@@ -3,10 +3,11 @@
 Weather Simulator for generating weather conditions data for various stations and time across the world. The weather data is predicted for any date for the given locations based on the historical data.
 
 # Running the app
+Prerequisite for running the app is to set the JDK as JAVA_HOME in the environment variable. Follow build instruction step 1 to 3 if JAVA_HOME is not set
 
-To view the Weather Simulator Application, in command prompt go to directory  where the jar  WorldWeatherSimulatorApp-1.0-SNAPSHOT.jar is downloaded. Run below command in command prompt
+To view the Weather Simulator Application, in command prompt go to directory  where the jar  WorldWeatherSimulatorApp-1.0-SNAPSHOT.jar is downloaded. Run below command in command prompt and wait for the App to launch.
 
- java -jar WorldWeatherSimulatorApp-1.0-SNAPSHOT.jar and wait for the App to launch.
+ java -jar WorldWeatherSimulatorApp-1.0-SNAPSHOT.jar 
  
 The initial screen will get the weather details for the stations for the current date. To generate  weather report for another date , click on Change Report Date button and enter the date of your choice and then submit.
 
@@ -43,7 +44,9 @@ In order to build the application following steps needs to be done.
  
 9.  Go to the project home directory until WorldWeatherSimulatorApp and run command mvn package to generate the project jar
 
-10. Generated jar will be inside target folder. The application can be launched by using below command  java -jar WorldWeatherSimulatorApp-1.0-SNAPSHOT.jar 
+10. Generated jar will be inside target folder. The application can be launched by using below command 
+
+java -jar WorldWeatherSimulatorApp-1.0-SNAPSHOT.jar 
  
 
 
